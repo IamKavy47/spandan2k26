@@ -126,7 +126,7 @@ function initLoaderShort() {
 
   tl.call(
     function () {
-      lenis.stop();
+      if (lenis) lenis.stop();
     },
     null,
     0
@@ -252,7 +252,7 @@ function initLoader() {
 
   tl.call(
     function () {
-      lenis.stop();
+      if (lenis) lenis.stop();
     },
     null,
     0
@@ -285,7 +285,7 @@ function pageTransitionIn() {
   }
 
   tl.call(function () {
-    lenis.stop();
+    if (lenis) lenis.stop();
   });
 }
 
@@ -295,7 +295,7 @@ function pageTransitionOut() {
 
   tl.call(
     function () {
-      lenis.start();
+      if (lenis) lenis.start();
     },
     null,
     0
@@ -312,7 +312,7 @@ function initPageTransitions() {
 
   // # Common: leave (After Offset)
   async function commonLeaveAfterOffset(data) {
-    lenis.destroy();
+    if (lenis) lenis.destroy();
     killAllScrollTriggers();
     data.current.container.remove();
     $('[data-navigation-status]').attr('data-navigation-status', 'not-active');
@@ -418,6 +418,12 @@ function initPageTransitions() {
 }
 
 function initLenis() {
+  // Check if Lenis should be disabled on this page
+  if (document.body.getAttribute('data-no-lenis') === 'true') {
+    console.log('Lenis disabled for this page');
+    return;
+  }
+
   // Lenis: https://github.com/studio-freight/lenis
   lenis = new Lenis({
     // duration: 1,
@@ -507,17 +513,17 @@ function initBasicFunctions() {
       $('[data-yt-modal-status]').attr('data-yt-modal-status') == 'not-active'
     ) {
       $('[data-yt-modal-status]').attr('data-yt-modal-status', 'active');
-      lenis.stop();
+      if (lenis) lenis.stop();
     } else {
       $('[data-yt-modal-status]').attr('data-yt-modal-status', 'not-active');
-      lenis.start();
+      if (lenis) lenis.start();
     }
   });
 
   // Close YT Modal
   $('[data-yt-modal-toggle="close"]').click(function () {
     $('[data-yt-modal-status]').attr('data-yt-modal-status', 'not-active');
-    lenis.start();
+    if (lenis) lenis.start();
 
     // Stop YouTube iframe by resetting their src
     $('iframe[src*="youtube.com"]').each(function () {
@@ -535,7 +541,7 @@ function initBasicFunctions() {
         $('[data-yt-modal-status]').attr('data-yt-modal-status') == 'active'
       ) {
         $('[data-yt-modal-status]').attr('data-yt-modal-status', 'not-active');
-        lenis.start();
+        if (lenis) lenis.start();
 
         // Stop YouTube iframe by resetting their src
         $('iframe[src*="youtube.com"]').each(function () {
@@ -963,11 +969,11 @@ function initLenisCheckScrollUpDown() {
   };
 
   function startCheckScroll() {
-    lenis.on('scroll', scrollHandler);
+    if (lenis) lenis.on('scroll', scrollHandler);
   }
 
   function stopCheckScroll() {
-    lenis.off('scroll', scrollHandler);
+    if (lenis) lenis.off('scroll', scrollHandler);
   }
 
   // Initialize the scroll check
@@ -989,6 +995,8 @@ function initLenisCheckScrollUpDown() {
  * Lenis - ScrollTo Anchor Links
  */
 function initScrollToAnchorLenis() {
+  if (!lenis) return; // Exit if lenis is not initialized
+  
   $('[data-anchor-target]').click(function () {
     let targetScrollToAnchorLenis = $(this).attr('data-anchor-target');
     lenis.scrollTo(targetScrollToAnchorLenis, {
