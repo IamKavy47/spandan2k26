@@ -969,11 +969,11 @@ function initLenisCheckScrollUpDown() {
   };
 
   function startCheckScroll() {
-    lenis.on('scroll', scrollHandler);
+    if (lenis) lenis.on('scroll', scrollHandler);
   }
 
   function stopCheckScroll() {
-    lenis.off('scroll', scrollHandler);
+    if (lenis) lenis.off('scroll', scrollHandler);
   }
 
   // Initialize the scroll check
