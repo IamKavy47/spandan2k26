@@ -141,16 +141,16 @@
 
       <div data-scroll-container="" class="main-wrap">
         <!-- Rainbow Background Elements -->
-        <div style="position: fixed; top: 0; right: 0; width: 200px; height: 100%; z-index: 0; pointer-events: none;">
+        <div class="rainbow-sidebar rainbow-sidebar--right" style="position: fixed; top: 0; right: 0; width: 200px; height: 100vh; z-index: 0; pointer-events: none;">
           <div style="position: absolute; top: 0; right: 0; width: 100%; height: 100%; display: flex; gap: 0;">
             <div style="flex: 1; background-color: var(--color-pink);"></div>
             <div style="flex: 1; background-color: var(--color-yellow);"></div>
             <div style="flex: 1; background-color: var(--color-orange);"></div>
-            <div style="flex: 1; background-color: #f97028);"></div>
+            <div style="flex: 1; background-color: #f97028;"></div>
           </div>
         </div>
         
-        <div style="position: fixed; bottom: 0; left: 0; width: 200px; height: 100%; z-index: 0; pointer-events: none;">
+        <div class="rainbow-sidebar rainbow-sidebar--left" style="position: fixed; bottom: 0; left: 0; width: 200px; height: 100vh; z-index: 0; pointer-events: none;">
           <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; gap: 0;">
             <div style="flex: 1; background-color: var(--color-orange);"></div>
             <div style="flex: 1; background-color: var(--color-yellow);"></div>
@@ -160,31 +160,31 @@
         </div>
 
         <!-- Registration Form Section -->
-        <section style="min-height: 100vh; padding: 8em 2em; position: relative; z-index: 1;">
-          <div class="container" style="max-width: 800px; margin: 0 auto;">
-            <div style="text-align: center; margin-bottom: 3em;">
-              <h1 class="h1" style="margin-bottom: 0.5em;">
-                <span style="display: inline-block; position: relative; transform: rotate(-2deg);">
+        <section class="form-section" style="min-height: 100vh; padding: 8em 2em; position: relative; z-index: 1; overflow-y: auto;">
+          <div class="container form-container" style="max-width: 800px; margin: 0 auto;">
+            <div class="form-header" style="text-align: center; margin-bottom: 3em; opacity: 0; transform: translateY(-20px); animation: fadeInDown 0.8s ease forwards;">
+              <h1 class="h1 form-title" style="margin-bottom: 0.5em;">
+                <span style="display: inline-block; position: relative; transform: rotate(-2deg); animation: rotateIn 0.6s ease forwards 0.2s; opacity: 0;">
                   Register
                 </span>
                 <br>
-                <span style="display: inline-block; position: relative; transform: rotate(1deg);">
+                <span style="display: inline-block; position: relative; transform: rotate(1deg); animation: rotateIn 0.6s ease forwards 0.4s; opacity: 0;">
                   for Spandan 2026
                 </span>
               </h1>
-              <p style="font-size: 1.25em; opacity: 0.8;">Join us for the biggest tech fest of the year!</p>
+              <p class="form-subtitle" style="font-size: 1.25em; opacity: 0; animation: fadeIn 0.6s ease forwards 0.6s;">Join us for the biggest tech fest of the year!</p>
             </div>
 
             <!-- Registration Form Card -->
-            <div style="background-color: var(--color-light-plus); border: 0.125em solid var(--color-dark); border-radius: 1.5em; padding: 3em; box-shadow: 0.5em 0.5em 0 0 var(--color-pink); position: relative; transform: rotate(-1deg); transition: all 0.5s cubic-bezier(0.625, 0.05, 0, 1);" 
+            <div class="form-card" style="background-color: var(--color-light-plus); border: 0.125em solid var(--color-dark); border-radius: 1.5em; padding: 3em; box-shadow: 0.5em 0.5em 0 0 var(--color-pink); position: relative; transform: rotate(-1deg); transition: all 0.5s cubic-bezier(0.625, 0.05, 0, 1); opacity: 0; animation: fadeInUp 0.8s ease forwards 0.4s;" 
                  onmouseover="this.style.transform='rotate(0deg) translateY(-0.5em)'; this.style.boxShadow='0.75em 0.75em 0 0 var(--color-pink)'" 
                  onmouseout="this.style.transform='rotate(-1deg)'; this.style.boxShadow='0.5em 0.5em 0 0 var(--color-pink)'">
               
-              <form id="registrationForm" style="display: flex; flex-direction: column; gap: 2em;">
+              <form id="registrationForm" class="registration-form" style="display: flex; flex-direction: column; gap: 2em;">
                 
                 <!-- Full Name -->
-                <div class="form-field">
-                  <label for="fullName" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark);">
+                <div class="form-field" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards 0.8s;">
+                  <label for="fullName" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark); transition: color 0.3s ease;">
                     Full Name *
                   </label>
                   <input 
@@ -193,15 +193,15 @@
                     name="fullName" 
                     required
                     placeholder="Enter your full name"
-                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.25s cubic-bezier(0.625, 0.05, 0, 1);"
-                    onfocus="this.style.borderColor='var(--color-pink)'; this.style.transform='translateY(-0.125em)'"
-                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0)'"
+                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.3s cubic-bezier(0.625, 0.05, 0, 1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);"
+                    onfocus="this.style.borderColor='var(--color-pink)'; this.style.transform='translateY(-0.125em) scale(1.01)'; this.style.boxShadow='0 0.25em 0.5em 0 rgba(255, 105, 180, 0.3)'; this.previousElementSibling.style.color='var(--color-pink)'"
+                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 0 0 0 rgba(255, 105, 180, 0)'; this.previousElementSibling.style.color='var(--color-dark)'"
                   />
                 </div>
 
                 <!-- Email -->
-                <div class="form-field">
-                  <label for="email" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark);">
+                <div class="form-field" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards 0.9s;">
+                  <label for="email" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark); transition: color 0.3s ease;">
                     Email Address *
                   </label>
                   <input 
@@ -210,15 +210,15 @@
                     name="email" 
                     required
                     placeholder="your.email@example.com"
-                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.25s cubic-bezier(0.625, 0.05, 0, 1);"
-                    onfocus="this.style.borderColor='var(--color-mango)'; this.style.transform='translateY(-0.125em)'"
-                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0)'"
+                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.3s cubic-bezier(0.625, 0.05, 0, 1); box-shadow: 0 0 0 0 rgba(255, 174, 28, 0);"
+                    onfocus="this.style.borderColor='var(--color-mango)'; this.style.transform='translateY(-0.125em) scale(1.01)'; this.style.boxShadow='0 0.25em 0.5em 0 rgba(255, 174, 28, 0.3)'; this.previousElementSibling.style.color='var(--color-mango)'"
+                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 0 0 0 rgba(255, 174, 28, 0)'; this.previousElementSibling.style.color='var(--color-dark)'"
                   />
                 </div>
 
                 <!-- Phone -->
-                <div class="form-field">
-                  <label for="phone" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark);">
+                <div class="form-field" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards 1s;">
+                  <label for="phone" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark); transition: color 0.3s ease;">
                     Phone Number *
                   </label>
                   <input 
@@ -227,15 +227,15 @@
                     name="phone" 
                     required
                     placeholder="+91 XXXXXXXXXX"
-                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.25s cubic-bezier(0.625, 0.05, 0, 1);"
-                    onfocus="this.style.borderColor='var(--color-orange)'; this.style.transform='translateY(-0.125em)'"
-                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0)'"
+                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.3s cubic-bezier(0.625, 0.05, 0, 1); box-shadow: 0 0 0 0 rgba(249, 112, 40, 0);"
+                    onfocus="this.style.borderColor='var(--color-orange)'; this.style.transform='translateY(-0.125em) scale(1.01)'; this.style.boxShadow='0 0.25em 0.5em 0 rgba(249, 112, 40, 0.3)'; this.previousElementSibling.style.color='var(--color-orange)'"
+                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 0 0 0 rgba(249, 112, 40, 0)'; this.previousElementSibling.style.color='var(--color-dark)'"
                   />
                 </div>
 
                 <!-- Institution -->
-                <div class="form-field">
-                  <label for="institution" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark);">
+                <div class="form-field" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards 1.1s;">
+                  <label for="institution" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark); transition: color 0.3s ease;">
                     Institution/College *
                   </label>
                   <input 
@@ -244,24 +244,24 @@
                     name="institution" 
                     required
                     placeholder="Enter your college name"
-                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.25s cubic-bezier(0.625, 0.05, 0, 1);"
-                    onfocus="this.style.borderColor='var(--color-yellow)'; this.style.transform='translateY(-0.125em)'"
-                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0)'"
+                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.3s cubic-bezier(0.625, 0.05, 0, 1); box-shadow: 0 0 0 0 rgba(255, 222, 89, 0);"
+                    onfocus="this.style.borderColor='var(--color-yellow)'; this.style.transform='translateY(-0.125em) scale(1.01)'; this.style.boxShadow='0 0.25em 0.5em 0 rgba(255, 222, 89, 0.3)'; this.previousElementSibling.style.color='var(--color-yellow)'"
+                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 0 0 0 rgba(255, 222, 89, 0)'; this.previousElementSibling.style.color='var(--color-dark)'"
                   />
                 </div>
 
                 <!-- Event Category -->
-                <div class="form-field">
-                  <label for="category" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark);">
+                <div class="form-field" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards 1.2s;">
+                  <label for="category" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark); transition: color 0.3s ease;">
                     Event Category *
                   </label>
                   <select 
                     id="category" 
                     name="category" 
                     required
-                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.25s cubic-bezier(0.625, 0.05, 0, 1); cursor: pointer;"
-                    onfocus="this.style.borderColor='var(--color-pink)'; this.style.transform='translateY(-0.125em)'"
-                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0)'"
+                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.3s cubic-bezier(0.625, 0.05, 0, 1); cursor: pointer; box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);"
+                    onfocus="this.style.borderColor='var(--color-pink)'; this.style.transform='translateY(-0.125em) scale(1.01)'; this.style.boxShadow='0 0.25em 0.5em 0 rgba(255, 105, 180, 0.3)'; this.previousElementSibling.style.color='var(--color-pink)'"
+                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 0 0 0 rgba(255, 105, 180, 0)'; this.previousElementSibling.style.color='var(--color-dark)'"
                   >
                     <option value="">Select an event category</option>
                     <option value="coding">Coding & Programming</option>
@@ -275,8 +275,8 @@
                 </div>
 
                 <!-- Additional Message -->
-                <div class="form-field">
-                  <label for="message" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark);">
+                <div class="form-field" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards 1.3s;">
+                  <label for="message" style="display: block; font-size: 1em; font-weight: bold; margin-bottom: 0.5em; color: var(--color-dark); transition: color 0.3s ease;">
                     Additional Message (Optional)
                   </label>
                   <textarea 
@@ -284,21 +284,21 @@
                     name="message" 
                     rows="4"
                     placeholder="Tell us anything else you'd like us to know..."
-                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.25s cubic-bezier(0.625, 0.05, 0, 1); resize: vertical; font-family: inherit;"
-                    onfocus="this.style.borderColor='var(--color-mango)'; this.style.transform='translateY(-0.125em)'"
-                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0)'"
+                    style="width: 100%; padding: 1em; font-size: 1em; border: 0.125em solid var(--color-dark); border-radius: 0.5em; background-color: var(--color-light); transition: all 0.3s cubic-bezier(0.625, 0.05, 0, 1); resize: vertical; font-family: inherit; box-shadow: 0 0 0 0 rgba(255, 174, 28, 0);"
+                    onfocus="this.style.borderColor='var(--color-mango)'; this.style.transform='translateY(-0.125em) scale(1.01)'; this.style.boxShadow='0 0.25em 0.5em 0 rgba(255, 174, 28, 0.3)'; this.previousElementSibling.style.color='var(--color-mango)'"
+                    onblur="this.style.borderColor='var(--color-dark)'; this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 0 0 0 rgba(255, 174, 28, 0)'; this.previousElementSibling.style.color='var(--color-dark)'"
                   ></textarea>
                 </div>
 
                 <!-- Submit Button -->
-                <div style="text-align: center; margin-top: 1em;">
+                <div style="text-align: center; margin-top: 1em; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards 1.4s;">
                   <button 
                     type="submit" 
-                    class="btn"
+                    class="btn submit-btn"
                     data-hover=""
-                    style="display: inline-block; padding: 1em 3em; font-size: 1.25em; font-weight: bold; color: var(--color-dark); background-color: var(--color-pink); border: 0.125em solid var(--color-dark); border-radius: 2em; box-shadow: 0em 0.5em 0em 0em rgba(0, 0, 0, 0.5); transition: all 0.25s cubic-bezier(0.625, 0.05, 0, 1); cursor: pointer; transform: rotate(-2deg);"
-                    onmouseover="this.style.transform='translateY(0.25em) rotate(-2deg)'; this.style.boxShadow='0em 0em 0em 0em rgba(0, 0, 0, 0.5)'"
-                    onmouseout="this.style.transform='rotate(-2deg)'; this.style.boxShadow='0em 0.5em 0em 0em rgba(0, 0, 0, 0.5)'"
+                    style="display: inline-block; padding: 1em 3em; font-size: 1.25em; font-weight: bold; color: var(--color-dark); background-color: var(--color-pink); border: 0.125em solid var(--color-dark); border-radius: 2em; box-shadow: 0em 0.5em 0em 0em rgba(0, 0, 0, 0.5); transition: all 0.3s cubic-bezier(0.625, 0.05, 0, 1); cursor: pointer; transform: rotate(-2deg); position: relative; overflow: hidden;"
+                    onmouseover="this.style.transform='translateY(0.25em) rotate(-2deg) scale(1.05)'; this.style.boxShadow='0em 0em 0em 0em rgba(0, 0, 0, 0.5)'; this.style.backgroundColor='var(--color-mango)'"
+                    onmouseout="this.style.transform='rotate(-2deg) scale(1)'; this.style.boxShadow='0em 0.5em 0em 0em rgba(0, 0, 0, 0.5)'; this.style.backgroundColor='var(--color-pink)'"
                   >
                     <span class="btn__span">Register Now!</span>
                   </button>
@@ -307,8 +307,8 @@
             </div>
 
             <!-- Success Message (Hidden by default) -->
-            <div id="successMessage" style="display: none; margin-top: 2em; padding: 2em; background-color: var(--color-mango); border: 0.125em solid var(--color-dark); border-radius: 1em; text-align: center; transform: rotate(1deg); box-shadow: 0.5em 0.5em 0 0 var(--color-orange);">
-              <h2 style="margin-bottom: 0.5em;">🎉 Registration Successful!</h2>
+            <div id="successMessage" style="display: none; margin-top: 2em; padding: 2em; background-color: var(--color-mango); border: 0.125em solid var(--color-dark); border-radius: 1em; text-align: center; transform: rotate(1deg) scale(0.8); box-shadow: 0.5em 0.5em 0 0 var(--color-orange); opacity: 0; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);">
+              <h2 style="margin-bottom: 0.5em; font-size: 2em;">🎉 Registration Successful!</h2>
               <p style="font-size: 1.125em;">Thank you for registering for Spandan 2026. We'll be in touch soon!</p>
             </div>
           </div>
@@ -331,32 +331,325 @@
     <script src="js/webflow.js"></script>
     <script src="js/main.js"></script>
     
-    <!-- Form Submission Script -->
+    <!-- Form Submission and Animation Script -->
     <script>
-      // Form submission handler
-      document.getElementById('registrationForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+      // Wait for GSAP to be loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        // Register GSAP plugins if available
+        if (typeof gsap !== 'undefined') {
+          // Custom ease similar to index
+          if (gsap.registerPlugin && typeof CustomEase !== 'undefined') {
+            gsap.registerPlugin(CustomEase, ScrollTrigger);
+            CustomEase.create('cubic-default', '0.625, 0.05, 0, 1');
+          }
+          
+          // Set default ease
+          gsap.defaults({ ease: 'cubic-default', duration: 1.47 });
+          
+          // Animate rainbow sidebars with parallax effect
+          gsap.to('.rainbow-sidebar--right', {
+            y: -100,
+            scrollTrigger: {
+              trigger: '.form-section',
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1
+            }
+          });
+          
+          gsap.to('.rainbow-sidebar--left', {
+            y: 100,
+            scrollTrigger: {
+              trigger: '.form-section',
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1
+            }
+          });
+          
+          // Animate form fields on scroll
+          gsap.utils.toArray('.form-field').forEach((field, index) => {
+            gsap.from(field, {
+              scrollTrigger: {
+                trigger: field,
+                start: 'top 90%',
+                toggleActions: 'play none none none'
+              },
+              y: 30,
+              opacity: 0,
+              duration: 0.8,
+              delay: index * 0.1,
+              ease: 'power2.out'
+            });
+          });
+          
+          // Add subtle floating animation to the form card
+          gsap.to('.form-card', {
+            y: -10,
+            duration: 2,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1
+          });
+        }
         
-        // Get form data
-        const formData = {
-          fullName: document.getElementById('fullName').value,
-          email: document.getElementById('email').value,
-          phone: document.getElementById('phone').value,
-          institution: document.getElementById('institution').value,
-          category: document.getElementById('category').value,
-          message: document.getElementById('message').value
-        };
-        
-        // Log form data (in production, this would be sent to a server)
-        console.log('Registration Data:', formData);
-        
-        // Hide form and show success message
-        document.getElementById('registrationForm').parentElement.style.display = 'none';
-        document.getElementById('successMessage').style.display = 'block';
-        
-        // Scroll to success message
-        document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+        // Form submission handler
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Get form data
+          const formData = {
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            institution: document.getElementById('institution').value,
+            category: document.getElementById('category').value,
+            message: document.getElementById('message').value
+          };
+          
+          // Log form data (in production, this would be sent to a server)
+          console.log('Registration Data:', formData);
+          
+          // Animate form card out and success message in
+          const formCard = document.querySelector('.form-card');
+          const successMsg = document.getElementById('successMessage');
+          
+          if (typeof gsap !== 'undefined') {
+            // Use GSAP for smooth animations
+            gsap.to(formCard, {
+              opacity: 0,
+              y: -50,
+              rotation: -5,
+              duration: 0.6,
+              ease: 'power2.in',
+              onComplete: function() {
+                formCard.style.display = 'none';
+                successMsg.style.display = 'block';
+                
+                // Animate success message in
+                gsap.fromTo(successMsg, 
+                  { opacity: 0, scale: 0.5, rotation: -10 },
+                  { 
+                    opacity: 1, 
+                    scale: 1, 
+                    rotation: 1, 
+                    duration: 0.8,
+                    ease: 'back.out(1.7)',
+                    onComplete: function() {
+                      // Add wiggle animation
+                      gsap.to(successMsg, {
+                        rotation: 3,
+                        duration: 0.3,
+                        ease: 'sine.inOut',
+                        yoyo: true,
+                        repeat: 3
+                      });
+                    }
+                  }
+                );
+                
+                // Scroll to success message
+                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            });
+          } else {
+            // Fallback without GSAP
+            formCard.style.opacity = '0';
+            formCard.style.transform = 'translateY(-20px) rotate(-1deg)';
+            
+            setTimeout(() => {
+              formCard.style.display = 'none';
+              successMsg.style.display = 'block';
+              
+              setTimeout(() => {
+                successMsg.style.opacity = '1';
+                successMsg.style.transform = 'rotate(1deg) scale(1)';
+              }, 50);
+              
+              successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 500);
+          }
+        });
       });
     </script>
+    
+    <!-- CSS Animations -->
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes rotateIn {
+        from {
+          opacity: 0;
+          transform: rotate(-10deg) scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: rotate(inherit) scale(1);
+        }
+      }
+      
+      /* Responsive styles */
+      @media screen and (max-width: 991px) {
+        .rainbow-sidebar {
+          width: 100px !important;
+        }
+        
+        .form-section {
+          padding: 6em 1.5em !important;
+        }
+        
+        .form-card {
+          padding: 2em !important;
+        }
+        
+        .h1 {
+          font-size: 4em !important;
+        }
+      }
+      
+      @media screen and (max-width: 767px) {
+        .rainbow-sidebar {
+          width: 50px !important;
+        }
+        
+        .form-section {
+          padding: 5em 1em !important;
+        }
+        
+        .form-card {
+          padding: 1.5em !important;
+          border-radius: 1em !important;
+        }
+        
+        .h1 {
+          font-size: 3em !important;
+        }
+        
+        .form-subtitle {
+          font-size: 1em !important;
+        }
+        
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+          font-size: 0.95em !important;
+          padding: 0.875em !important;
+        }
+        
+        .submit-btn {
+          font-size: 1.1em !important;
+          padding: 0.875em 2em !important;
+        }
+      }
+      
+      @media screen and (max-width: 479px) {
+        .rainbow-sidebar {
+          width: 30px !important;
+        }
+        
+        .form-section {
+          padding: 4em 0.75em !important;
+        }
+        
+        .form-card {
+          padding: 1.25em !important;
+          transform: rotate(0deg) !important;
+        }
+        
+        .form-card:hover {
+          transform: translateY(-0.25em) rotate(0deg) !important;
+        }
+        
+        .h1 {
+          font-size: 2.5em !important;
+        }
+        
+        .form-header {
+          margin-bottom: 2em !important;
+        }
+        
+        .registration-form {
+          gap: 1.5em !important;
+        }
+        
+        .form-field label {
+          font-size: 0.95em !important;
+        }
+        
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+          font-size: 0.9em !important;
+          padding: 0.75em !important;
+        }
+        
+        .submit-btn {
+          font-size: 1em !important;
+          padding: 0.75em 1.75em !important;
+        }
+      }
+      
+      /* Smooth scrolling for the entire page */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      body {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      
+      .main-wrap {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      
+      .form-section {
+        overflow: visible;
+      }
+      
+      /* Enhanced button pulse animation */
+      @keyframes pulse {
+        0%, 100% {
+          transform: rotate(-2deg) scale(1);
+        }
+        50% {
+          transform: rotate(-2deg) scale(1.05);
+        }
+      }
+      
+      .submit-btn:active {
+        animation: pulse 0.3s ease;
+      }
+    </style>
   </body>
 </html>
