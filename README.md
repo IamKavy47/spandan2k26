@@ -1,6 +1,5 @@
 # Spandan2K26 - Tech Fest Website
 
-
 ## Overview
 This is the website for Spandan2K26, a tech fest. The project has been organized into a proper file structure with separate folders for CSS, JavaScript, images, and assets.
 
