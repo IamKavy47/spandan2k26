@@ -33,12 +33,22 @@ function animateRainbow(
   rainbowTimeline = null,
   scrollTriggerConfig = null
 ) {
+  // Skip if elements don't exist on the page
+  const paths = document.querySelectorAll(selector + ' path');
+  if (!paths || paths.length === 0) return;
+
   // if they passed a scrollTrigger config but no timeline, create it
+  // Also check if the ScrollTrigger elements exist
   if (!rainbowTimeline && scrollTriggerConfig) {
+    if (scrollTriggerConfig.trigger && !document.querySelector(scrollTriggerConfig.trigger)) {
+      return; // Skip if trigger element doesn't exist
+    }
+    if (scrollTriggerConfig.endTrigger && !document.querySelector(scrollTriggerConfig.endTrigger)) {
+      return; // Skip if endTrigger element doesn't exist
+    }
     rainbowTimeline = gsap.timeline({ scrollTrigger: scrollTriggerConfig });
   }
 
-  const paths = document.querySelectorAll(selector + ' path');
   const isFrom = mode === 'fromStart' || mode === 'fromEnd';
   const draw = mode.endsWith('Start') ? '0% 0%' : '100% 100%';
 
@@ -141,13 +151,23 @@ function initLoaderShort() {
     0
   );
 
-  tl.set($('.loading-screen'), {
-    autoAlpha: 0,
-  });
+  // Only animate loading screen if it exists
+  var loadingScreen = document.querySelector('.loading-screen');
+  if (loadingScreen) {
+    tl.set(loadingScreen, {
+      autoAlpha: 0,
+    });
+  }
 }
 
 // Animation - Page Loader
 function initLoader() {
+  // If required loader elements don't exist, fall back to short loader
+  if (!document.querySelector('.welcome-sun__transform') || !document.querySelector('.loading-screen')) {
+    initLoaderShort();
+    return;
+  }
+
   var tl = gsap.timeline();
 
   tl.set($('main'), {
@@ -454,6 +474,11 @@ function delay(n) {
  * Fire all scripts on page load
  */
 function initScript() {
+  // Disable all JS animations on pages where Lenis is disabled (e.g. form page)
+  if (document.body.getAttribute('data-no-lenis') === 'true') {
+    return;
+  }
+
   initCheckWindowHeight();
   initBasicFunctions();
   initStackedCardsDrag();
@@ -554,91 +579,97 @@ function initBasicFunctions() {
     }
   });
 
-  // Show and hide Sunny on Scroll
-  gsap.set('.sunny-fixed', { xPercent: -200 });
-  ScrollTrigger.create({
-    trigger: '.welcome__col-sun',
-    start: 'bottom top',
-    endTrigger: '.footer',
-    end: 'top bottom',
-    onToggle: self => {
-      gsap.to('.sunny-fixed', {
-        xPercent: self.isActive ? 0 : -200,
-        duration: 1.2,
-        ease: 'expo.inOut',
-      });
-    },
-  });
 
-  // Fixed Sunny Text on Hover
-  gsap.set('.sunny-fixed .chat-cloud', { autoAlpha: 0 });
-  function showText() {
-    gsap.set($('.sunny-fixed .chat-cloud__p'), {
-      text: '...',
-    });
-
-    gsap.to($('.sunny-fixed .chat-cloud'), {
-      duration: 0.2,
-      autoAlpha: 1,
-      ease: 'none',
-    });
-
-    gsap.to($('.sunny-fixed .chat-cloud__p'), {
-      duration: 0.5,
-      text: sunTransformText,
-      ease: 'none',
-      delay: 0.3,
-    });
-  }
-  function hideText() {
-    gsap.to($('.sunny-fixed .chat-cloud__p'), {
-      duration: 0.3,
-      text: '...',
-      ease: 'none',
-    });
-
-    gsap.to($('.sunny-fixed .chat-cloud'), {
-      duration: 0.2,
-      autoAlpha: 0,
-      ease: 'none',
-      delay: 0.3,
-    });
-  }
-
-  // desktop: hover in/out
-  $('.sunny-fixed .sun-chat-combo')
-    .on('mouseenter', showText)
-    .on('mouseleave', hideText);
-
-  // mobile/touch: tap to show
-  $('.sunny-fixed .sun-chat-combo').on('click touchstart', function (e) {
-    e.stopPropagation(); // prevent immediate document handler
-    showText();
-  });
-
-  // tap outside to hide
-  $(document).on('click touchstart', function (e) {
-    if (!$(e.target).closest($('.sunny-fixed .sun-chat-combo')).length) {
-      hideText();
-    }
-  });
-
-  gsap.fromTo(
-    $('.footer .sun'),
-    {
-      yPercent: 50,
-    },
-    {
-      yPercent: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: $('.footer'),
-        start: 'top bottom', // when footer top enters viewport
-        end: 'bottom bottom', // when footer bottom reaches bottom of viewport
-        scrub: true,
+  // Show and hide Sunny on Scroll - only if elements exist
+  if (document.querySelector('.sunny-fixed') && document.querySelector('.welcome__col-sun') && document.querySelector('.footer')) {
+    gsap.set('.sunny-fixed', { xPercent: -200 });
+    ScrollTrigger.create({
+      trigger: '.welcome__col-sun',
+      start: 'bottom top',
+      endTrigger: '.footer',
+      end: 'top bottom',
+      onToggle: self => {
+        gsap.to('.sunny-fixed', {
+          xPercent: self.isActive ? 0 : -200,
+          duration: 1.2,
+          ease: 'expo.inOut',
+        });
       },
+    });
+
+    // Fixed Sunny Text on Hover
+    gsap.set('.sunny-fixed .chat-cloud', { autoAlpha: 0 });
+    function showText() {
+      gsap.set($('.sunny-fixed .chat-cloud__p'), {
+        text: '...',
+      });
+
+      gsap.to($('.sunny-fixed .chat-cloud'), {
+        duration: 0.2,
+        autoAlpha: 1,
+        ease: 'none',
+      });
+
+      gsap.to($('.sunny-fixed .chat-cloud__p'), {
+        duration: 0.5,
+        text: sunTransformText,
+        ease: 'none',
+        delay: 0.3,
+      });
     }
-  );
+    function hideText() {
+      gsap.to($('.sunny-fixed .chat-cloud__p'), {
+        duration: 0.3,
+        text: '...',
+        ease: 'none',
+      });
+
+      gsap.to($('.sunny-fixed .chat-cloud'), {
+        duration: 0.2,
+        autoAlpha: 0,
+        ease: 'none',
+        delay: 0.3,
+      });
+    }
+
+    // desktop: hover in/out
+    $('.sunny-fixed .sun-chat-combo')
+      .on('mouseenter', showText)
+      .on('mouseleave', hideText);
+
+    // mobile/touch: tap to show
+    $('.sunny-fixed .sun-chat-combo').on('click touchstart', function (e) {
+      e.stopPropagation(); // prevent immediate document handler
+      showText();
+    });
+
+    // tap outside to hide
+    $(document).on('click touchstart', function (e) {
+      if (!$(e.target).closest($('.sunny-fixed .sun-chat-combo')).length) {
+        hideText();
+      }
+    });
+  }
+
+  // Footer sun animation - only if footer exists
+  if (document.querySelector('.footer .sun')) {
+    gsap.fromTo(
+      $('.footer .sun'),
+      {
+        yPercent: 50,
+      },
+      {
+        yPercent: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: $('.footer'),
+          start: 'top bottom', // when footer top enters viewport
+          end: 'bottom bottom', // when footer bottom reaches bottom of viewport
+          scrub: true,
+        },
+      }
+    );
+  }
 
   $('.about__tile').each(function () {
     let triggerElement = $(this);
@@ -944,9 +975,20 @@ function initLenisCheckScrollUpDown() {
   var threshold = 50;
   var thresholdTop = 50;
 
-  var scrollHandler = function (e) {
+  // Handler for Lenis scroll events
+  var lenisScrollHandler = function (e) {
     var nowScrollTop = e.targetScroll;
+    handleScroll(nowScrollTop);
+  };
 
+  // Handler for native scroll events (when Lenis is disabled)
+  var nativeScrollHandler = function () {
+    var nowScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    handleScroll(nowScrollTop);
+  };
+
+  // Common scroll handling logic
+  function handleScroll(nowScrollTop) {
     if (Math.abs(lastScrollTop - nowScrollTop) >= threshold) {
       // Check Scroll Direction
       if (nowScrollTop > lastScrollTop) {
@@ -966,14 +1008,23 @@ function initLenisCheckScrollUpDown() {
         $('[data-scrolling-started]').attr('data-scrolling-started', 'false');
       }
     }
-  };
+  }
 
   function startCheckScroll() {
-    if (lenis) lenis.on('scroll', scrollHandler);
+    if (lenis) {
+      lenis.on('scroll', lenisScrollHandler);
+    } else {
+      // Use native scroll for pages without Lenis
+      window.addEventListener('scroll', nativeScrollHandler, { passive: true });
+    }
   }
 
   function stopCheckScroll() {
-    if (lenis) lenis.off('scroll', scrollHandler);
+    if (lenis) {
+      lenis.off('scroll', lenisScrollHandler);
+    } else {
+      window.removeEventListener('scroll', nativeScrollHandler);
+    }
   }
 
   // Initialize the scroll check
@@ -996,7 +1047,7 @@ function initLenisCheckScrollUpDown() {
  */
 function initScrollToAnchorLenis() {
   if (!lenis) return; // Exit if lenis is not initialized
-  
+
   $('[data-anchor-target]').click(function () {
     let targetScrollToAnchorLenis = $(this).attr('data-anchor-target');
     lenis.scrollTo(targetScrollToAnchorLenis, {
@@ -1031,9 +1082,9 @@ function initCSSMarquee() {
           .querySelectorAll('[data-css-marquee-list]')
           .forEach(
             list =>
-              (list.style.animationPlayState = entry.isIntersecting
-                ? 'running'
-                : 'paused')
+            (list.style.animationPlayState = entry.isIntersecting
+              ? 'running'
+              : 'paused')
           );
       });
     },
