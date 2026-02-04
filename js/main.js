@@ -33,17 +33,24 @@ function animateRainbow(
   rainbowTimeline = null,
   scrollTriggerConfig = null
 ) {
+  // Check if the element exists before animating
+  const paths = document.querySelectorAll(selector + ' path');
+  if (!paths || paths.length === 0) {
+    return; // Exit if no paths found
+  }
+
   // if they passed a scrollTrigger config but no timeline, create it
   if (!rainbowTimeline && scrollTriggerConfig) {
     rainbowTimeline = gsap.timeline({ scrollTrigger: scrollTriggerConfig });
   }
 
-  const paths = document.querySelectorAll(selector + ' path');
   const isFrom = mode === 'fromStart' || mode === 'fromEnd';
   const draw = mode.endsWith('Start') ? '0% 0%' : '100% 100%';
 
   for (let i = 0; i < count; i++) {
-    const targets = [paths[i], paths[i + count]];
+    const targets = [paths[i], paths[i + count]].filter(Boolean);
+    if (targets.length === 0) continue;
+    
     const pos = delay + i * stagger;
 
     if (rainbowTimeline) {
@@ -148,6 +155,13 @@ function initLoaderShort() {
 
 // Animation - Page Loader
 function initLoader() {
+  // Skip full loader if required elements don't exist (e.g., on form page)
+  if (!document.querySelector('.welcome-sun__transform') || !document.querySelector('.rainbow-sides__right')) {
+    // Run simplified loader for pages without main animation elements
+    initLoaderShort();
+    return;
+  }
+  
   var tl = gsap.timeline();
 
   tl.set($('main'), {
@@ -554,91 +568,98 @@ function initBasicFunctions() {
     }
   });
 
-  // Show and hide Sunny on Scroll
-  gsap.set('.sunny-fixed', { xPercent: -200 });
-  ScrollTrigger.create({
-    trigger: '.welcome__col-sun',
-    start: 'bottom top',
-    endTrigger: '.footer',
-    end: 'top bottom',
-    onToggle: self => {
-      gsap.to('.sunny-fixed', {
-        xPercent: self.isActive ? 0 : -200,
-        duration: 1.2,
-        ease: 'expo.inOut',
-      });
-    },
-  });
-
-  // Fixed Sunny Text on Hover
-  gsap.set('.sunny-fixed .chat-cloud', { autoAlpha: 0 });
-  function showText() {
-    gsap.set($('.sunny-fixed .chat-cloud__p'), {
-      text: '...',
-    });
-
-    gsap.to($('.sunny-fixed .chat-cloud'), {
-      duration: 0.2,
-      autoAlpha: 1,
-      ease: 'none',
-    });
-
-    gsap.to($('.sunny-fixed .chat-cloud__p'), {
-      duration: 0.5,
-      text: sunTransformText,
-      ease: 'none',
-      delay: 0.3,
-    });
-  }
-  function hideText() {
-    gsap.to($('.sunny-fixed .chat-cloud__p'), {
-      duration: 0.3,
-      text: '...',
-      ease: 'none',
-    });
-
-    gsap.to($('.sunny-fixed .chat-cloud'), {
-      duration: 0.2,
-      autoAlpha: 0,
-      ease: 'none',
-      delay: 0.3,
-    });
-  }
-
-  // desktop: hover in/out
-  $('.sunny-fixed .sun-chat-combo')
-    .on('mouseenter', showText)
-    .on('mouseleave', hideText);
-
-  // mobile/touch: tap to show
-  $('.sunny-fixed .sun-chat-combo').on('click touchstart', function (e) {
-    e.stopPropagation(); // prevent immediate document handler
-    showText();
-  });
-
-  // tap outside to hide
-  $(document).on('click touchstart', function (e) {
-    if (!$(e.target).closest($('.sunny-fixed .sun-chat-combo')).length) {
-      hideText();
-    }
-  });
-
-  gsap.fromTo(
-    $('.footer .sun'),
-    {
-      yPercent: 50,
-    },
-    {
-      yPercent: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: $('.footer'),
-        start: 'top bottom', // when footer top enters viewport
-        end: 'bottom bottom', // when footer bottom reaches bottom of viewport
-        scrub: true,
+  // Show and hide Sunny on Scroll (only if elements exist)
+  if (document.querySelector('.sunny-fixed') && document.querySelector('.welcome__col-sun') && document.querySelector('.footer')) {
+    gsap.set('.sunny-fixed', { xPercent: -200 });
+    ScrollTrigger.create({
+      trigger: '.welcome__col-sun',
+      start: 'bottom top',
+      endTrigger: '.footer',
+      end: 'top bottom',
+      onToggle: self => {
+        gsap.to('.sunny-fixed', {
+          xPercent: self.isActive ? 0 : -200,
+          duration: 1.2,
+          ease: 'expo.inOut',
+        });
       },
+    });
+  }
+
+  // Fixed Sunny Text on Hover (only if element exists)
+  if (document.querySelector('.sunny-fixed .chat-cloud')) {
+    gsap.set('.sunny-fixed .chat-cloud', { autoAlpha: 0 });
+    function showText() {
+      gsap.set($('.sunny-fixed .chat-cloud__p'), {
+        text: '...',
+      });
+
+      gsap.to($('.sunny-fixed .chat-cloud'), {
+        duration: 0.2,
+        autoAlpha: 1,
+        ease: 'none',
+      });
+
+      gsap.to($('.sunny-fixed .chat-cloud__p'), {
+        duration: 0.5,
+        text: sunTransformText,
+        ease: 'none',
+        delay: 0.3,
+      });
     }
-  );
+    function hideText() {
+      gsap.to($('.sunny-fixed .chat-cloud__p'), {
+        duration: 0.3,
+        text: '...',
+        ease: 'none',
+      });
+
+      gsap.to($('.sunny-fixed .chat-cloud'), {
+        duration: 0.2,
+        autoAlpha: 0,
+        ease: 'none',
+        delay: 0.3,
+      });
+    }
+
+    // desktop: hover in/out
+    $('.sunny-fixed .sun-chat-combo')
+      .on('mouseenter', showText)
+      .on('mouseleave', hideText);
+
+    // mobile/touch: tap to show
+    $('.sunny-fixed .sun-chat-combo').on('click touchstart', function (e) {
+      e.stopPropagation(); // prevent immediate document handler
+      showText();
+    });
+
+    // tap outside to hide
+    $(document).on('click touchstart', function (e) {
+      if (!$(e.target).closest($('.sunny-fixed .sun-chat-combo')).length) {
+        hideText();
+      }
+    });
+  }
+
+  // Footer sun animation (only if element exists)
+  if (document.querySelector('.footer .sun')) {
+    gsap.fromTo(
+      $('.footer .sun'),
+      {
+        yPercent: 50,
+      },
+      {
+        yPercent: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: $('.footer'),
+          start: 'top bottom', // when footer top enters viewport
+          end: 'bottom bottom', // when footer bottom reaches bottom of viewport
+          scrub: true,
+        },
+      }
+    );
+  }
 
   $('.about__tile').each(function () {
     let triggerElement = $(this);
