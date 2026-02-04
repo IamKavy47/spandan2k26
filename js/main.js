@@ -50,7 +50,6 @@ function animateRainbow(
   for (let i = 0; i < count; i++) {
     const targets = [paths[i], paths[i + count]].filter(Boolean);
     if (targets.length === 0) continue;
-    
     const pos = delay + i * stagger;
 
     if (rainbowTimeline) {
