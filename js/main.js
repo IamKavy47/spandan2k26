@@ -213,7 +213,7 @@ function initLoader() {
 
   tl.to($('.welcome-sun__transform .chat-cloud__p'), {
     duration: 0.5,
-    text: 'We are back...',
+    text: 'Spandan is back...',
     ease: 'none',
   });
 
