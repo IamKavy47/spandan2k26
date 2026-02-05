@@ -89,7 +89,7 @@ spandan2k26/
    - Replace speaker information
    - Update meta tags (title, description, OG tags)
    - Replace YouTube embed with Spandan2K26 video
-   - Update external links (tickets, sponsors, etc.)
+   - Update external links (Pass, sponsors, etc.)
 
 6. **Update Styling**
    - Modify `css/custom.css` for brand colors
