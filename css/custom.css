@@ -859,3 +859,74 @@ body:has([data-hover-sun-happy]:hover) .sun__face-svg > *:nth-child(6) {
 :is(.wf-design-mode, .w-editor) .expect-item .expect-card.is--even {
   transform: rotate(5deg) scale(1);
 }
+
+/* ------------------------- Events Section Responsive Fixes -------------------------------------------------- */
+
+/* Fix first item being cut off */
+@media screen and (max-width: 991px) {
+  .expect {
+    overflow: hidden;
+  }
+  
+  .expect__col-list {
+    overflow: visible;
+  }
+  
+  .expect-item__bg {
+    height: 100%;
+    top: 0;
+  }
+  
+  .expect-item__bg.is--first,
+  .expect-item__bg.is--last {
+    height: 100%;
+    top: 0;
+    border-radius: 0;
+    transform: none;
+  }
+}
+
+/* Mobile landscape fixes */
+@media screen and (max-width: 767px) {
+  .expect-item {
+    height: 5em;
+  }
+  
+  .expect-item_p {
+    font-size: 2em;
+  }
+  
+  .expect__h2 {
+    font-size: 3em;
+  }
+  
+  .expect-card {
+    width: 8em;
+    border-radius: 1em;
+  }
+}
+
+/* Mobile portrait fixes */
+@media screen and (max-width: 479px) {
+  .expect-item {
+    height: 4em;
+  }
+  
+  .expect-item_p {
+    font-size: 1.5em;
+  }
+  
+  .expect__h2 {
+    font-size: 2.5em;
+  }
+  
+  .expect__col-text {
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+  
+  .expect-card {
+    width: 6em;
+    border-radius: 0.75em;
+  }
+}
