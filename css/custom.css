@@ -936,8 +936,8 @@ body:has([data-hover-sun-happy]:hover) .sun__face-svg > *:nth-child(6) {
 /* Small notification in top right corner */
 .notification-popup {
   position: fixed;
-  top: 1.5em;
-  right: 1.5em;
+  top: 5.5em;
+  left: 1em;
   z-index: 9999;
   background-color: var(--color-light);
   border: 0.125em solid var(--color-dark);
